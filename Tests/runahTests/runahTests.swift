@@ -1,5 +1,5 @@
 import XCTest
-@testable import sinkrzd
+@testable import runah
 
 final class sinkrzd: XCTestCase {
     func testExample() throws {
