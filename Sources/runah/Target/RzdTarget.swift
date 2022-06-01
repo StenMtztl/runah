@@ -5,24 +5,10 @@ class RzdTarget: Target {
   let operationQueue: OperationQueue
   let scale: Int
   let urlSession: URLSession
-  private (set) var stats: Stats {
-    get {
-      lock.lock()
-      defer { lock.unlock() }
-      return _stats
-    }
-
-    set {
-      lock.lock()
-      defer { lock.unlock() }
-      _stats = newValue
-    }
-  }
-  private var _stats = Stats()
+  private (set) var stats: Stats = ThreadSafeStats()
 
   private let rzdJobGenerator = RzdJobGenerator()
   private let rzdRequestsGenerator = RzdRequestGenerator()
-  private let lock = NSLock()
 
   internal init(operationQueue: OperationQueue, scale: Int, urlSession: URLSession) {
     self.operationQueue = operationQueue
