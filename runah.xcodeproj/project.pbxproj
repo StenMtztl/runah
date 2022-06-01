@@ -21,6 +21,8 @@
 		BE3F1DE8284639FF00EED4E3 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3F1DD9284639FF00EED4E3 /* main.swift */; };
 		BE3F1DFC28463A3700EED4E3 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3F1DFB28463A3700EED4E3 /* Tests.swift */; };
 		BE3F1E0328463A9600EED4E3 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = BE3F1E0228463A9600EED4E3 /* ArgumentParser */; };
+		BE3F1E0628464EAC00EED4E3 /* RzdTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3F1E0528464EAC00EED4E3 /* RzdTarget.swift */; };
+		BE3F1E0828464EC100EED4E3 /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3F1E0728464EC100EED4E3 /* Target.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -51,6 +53,8 @@
 		BE3F1DD9284639FF00EED4E3 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		BE3F1DF928463A3700EED4E3 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE3F1DFB28463A3700EED4E3 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		BE3F1E0528464EAC00EED4E3 /* RzdTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RzdTarget.swift; sourceTree = "<group>"; };
+		BE3F1E0728464EC100EED4E3 /* Target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Target.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,11 +105,12 @@
 		BE3F1DC9284639FF00EED4E3 /* runah */ = {
 			isa = PBXGroup;
 			children = (
-				BE3F1DCA284639FF00EED4E3 /* Extensions */,
-				BE3F1DCD284639FF00EED4E3 /* Model */,
-				BE3F1DD1284639FF00EED4E3 /* Job */,
-				BE3F1DD5284639FF00EED4E3 /* Worker */,
 				BE3F1DD9284639FF00EED4E3 /* main.swift */,
+				BE3F1DCA284639FF00EED4E3 /* Extensions */,
+				BE3F1DD1284639FF00EED4E3 /* Job */,
+				BE3F1DCD284639FF00EED4E3 /* Model */,
+				BE3F1E0428464EA400EED4E3 /* Target */,
+				BE3F1DD5284639FF00EED4E3 /* Worker */,
 			);
 			path = runah;
 			sourceTree = "<group>";
@@ -113,8 +118,8 @@
 		BE3F1DCA284639FF00EED4E3 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				BE3F1DCB284639FF00EED4E3 /* URLSession+Extension.swift */,
 				BE3F1DCC284639FF00EED4E3 /* Collection+Extensions.swift */,
+				BE3F1DCB284639FF00EED4E3 /* URLSession+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -122,9 +127,9 @@
 		BE3F1DCD284639FF00EED4E3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				BE3F1DCE284639FF00EED4E3 /* Stats.swift */,
 				BE3F1DCF284639FF00EED4E3 /* RzdResponse.swift */,
 				BE3F1DD0284639FF00EED4E3 /* RzdStation.swift */,
+				BE3F1DCE284639FF00EED4E3 /* Stats.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -132,9 +137,9 @@
 		BE3F1DD1284639FF00EED4E3 /* Job */ = {
 			isa = PBXGroup;
 			children = (
-				BE3F1DD2284639FF00EED4E3 /* RzdJobGenerator.swift */,
 				BE3F1DD3284639FF00EED4E3 /* Job.swift */,
 				BE3F1DD4284639FF00EED4E3 /* RzdJob.swift */,
+				BE3F1DD2284639FF00EED4E3 /* RzdJobGenerator.swift */,
 			);
 			path = Job;
 			sourceTree = "<group>";
@@ -142,8 +147,8 @@
 		BE3F1DD5284639FF00EED4E3 /* Worker */ = {
 			isa = PBXGroup;
 			children = (
-				BE3F1DD6284639FF00EED4E3 /* RzdWorker.swift */,
 				BE3F1DD7284639FF00EED4E3 /* RzdRequestGenerator.swift */,
+				BE3F1DD6284639FF00EED4E3 /* RzdWorker.swift */,
 				BE3F1DD8284639FF00EED4E3 /* Worker.swift */,
 			);
 			path = Worker;
@@ -155,6 +160,15 @@
 				BE3F1DFB28463A3700EED4E3 /* Tests.swift */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		BE3F1E0428464EA400EED4E3 /* Target */ = {
+			isa = PBXGroup;
+			children = (
+				BE3F1E0528464EAC00EED4E3 /* RzdTarget.swift */,
+				BE3F1E0728464EC100EED4E3 /* Target.swift */,
+			);
+			path = Target;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -254,9 +268,11 @@
 			files = (
 				BE3F1DDD284639FF00EED4E3 /* URLSession+Extension.swift in Sources */,
 				BE3F1DE5284639FF00EED4E3 /* RzdWorker.swift in Sources */,
+				BE3F1E0828464EC100EED4E3 /* Target.swift in Sources */,
 				BE3F1DE8284639FF00EED4E3 /* main.swift in Sources */,
 				BE3F1DE6284639FF00EED4E3 /* RzdRequestGenerator.swift in Sources */,
 				BE3F1DE1284639FF00EED4E3 /* RzdStation.swift in Sources */,
+				BE3F1E0628464EAC00EED4E3 /* RzdTarget.swift in Sources */,
 				BE3F1DE4284639FF00EED4E3 /* RzdJob.swift in Sources */,
 				BE3F1DDF284639FF00EED4E3 /* Stats.swift in Sources */,
 				BE3F1DDE284639FF00EED4E3 /* Collection+Extensions.swift in Sources */,
