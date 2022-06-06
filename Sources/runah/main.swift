@@ -1,5 +1,8 @@
 import Foundation
 import ArgumentParser
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 final class Runah: ParsableCommand {
   private enum CodingKeys: CodingKey {
@@ -35,20 +38,16 @@ final class Runah: ParsableCommand {
 
   private func startPrintStatsTimer() {
     DispatchQueue.global().async {
-      let timer = Timer(
-        timeInterval: TimeInterval(self.statsInterval),
-        target: self,
-        selector: #selector(self.printStats),
-        userInfo: nil,
-        repeats: true
-      )
+      let timer = Timer(timeInterval: TimeInterval(self.statsInterval), repeats: true) { [weak self] _ in
+        self?.printStats()
+      }
       RunLoop.current.add(timer, forMode: .common)
       RunLoop.current.run()
       self.timer = timer
     }
   }
 
-  @objc private func printStats() {
+  private func printStats() {
     let header = String(repeating: "–", count: 51)
     print("\n\n")
     print(header)

@@ -1,4 +1,7 @@
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 class RzdWorker: Operation, Worker {
   private enum Errors: Error {
@@ -74,7 +77,7 @@ class RzdWorker: Operation, Worker {
     super.cancel()
   }
 
-  @objc private func proceedWithNextStage() {
+  private func proceedWithNextStage() {
     switch stage {
     case .idle:
       obtainFirstStation()
