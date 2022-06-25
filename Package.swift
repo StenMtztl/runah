@@ -5,6 +5,9 @@ import PackageDescription
 
 let package = Package(
   name: "runah",
+  platforms: [
+    .macOS(.v10_12)
+  ],
   products: [
     .executable(
       name: "runah",

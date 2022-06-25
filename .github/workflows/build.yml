@@ -1,0 +1,16 @@
+name: Build and unit test the Swift Package
+
+on:
+  pull_request:
+
+jobs:
+  build_linux:
+    name: Build on Linux
+    runs-on: ubuntu-latest
+    steps:
+      - uses: fwal/setup-swift@v1
+      - uses: actions/checkout@v3
+      - name: Run tests
+        run: swift test
+      - name: Build
+        run: swift build --static-swift-stdlib 
